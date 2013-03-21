@@ -36,7 +36,7 @@ public class BiomeGenSForest extends BiomeGenBase
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
         //Class par1Class, Rate[Lower = Low, Higher = High], MinSpawnAmount, MaxSpawnAmount. PER GROUP!
-        this.spawnableMonsterList.add(new SpawnListEntry(EntityRobot.class, 5, 1, 3));     
+        this.spawnableMonsterList.add(new SpawnListEntry(EntityRobot.class, 3, 0, 1));     
         this.topBlock = (byte)SecretForest.srGrass.blockID;
         this.fillerBlock = (byte)SecretForest.srDirt.blockID;
         this.theBiomeDecorator = new BiomeDecoratorSForest(this);

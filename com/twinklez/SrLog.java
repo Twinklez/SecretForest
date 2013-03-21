@@ -2,13 +2,20 @@ package com.twinklez;
 
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class SrLog extends Block
 {
+	private Icon sides, bottom, top;
     protected SrLog(int var1)
     {
         super(var1, Material.wood);
@@ -39,7 +46,30 @@ public class SrLog extends Block
     {
         super.harvestBlock(var1, var2, var3, var4, var5, var6);
     }
-
+    
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+    	this.sides = par1IconRegister.func_94245_a("secretLog");
+    	this.bottom = par1IconRegister.func_94245_a("secretLogMetadata");
+    	this.top = par1IconRegister.func_94245_a("secretLogMetadata");
+    }
+    
+    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
+    {
+    	if (i == 0)
+    	{
+    		return bottom;
+    	}
+    	if (i == 1)
+    	{
+    		return top;
+    	}
+    	else
+    	{
+    		return sides;
+    	}
+    }
+    
     public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
     {
         byte b0 = 4;

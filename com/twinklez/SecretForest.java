@@ -65,8 +65,10 @@ public class SecretForest
     //Dimension ID
 	public static int dimension = 20;
 	
-	//Mod Version
+	//Mod Info
 	public String sfVersion = "0.1";
+	public String modName = "Secret Forest {Alpha Release} v0.1";
+	public String modCreator = "Twinklez, coolboy4531";
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)

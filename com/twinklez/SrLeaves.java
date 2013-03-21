@@ -280,7 +280,7 @@ public class SrLeaves extends BlockLeavesBase implements IShearable
                     d5 = (double)(par5Random.nextFloat() * 2.0F * (float)i1);
                 }
 
-                par1World.spawnParticle("smoke", d0, d1, d2, d3, d4, d5);
+                par1World.spawnParticle("witchMagic", d0, d1, d2, d3, d4, d5);
             }
         }
     }

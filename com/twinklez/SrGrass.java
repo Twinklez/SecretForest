@@ -1,15 +1,21 @@
 package com.twinklez;
 
 import java.util.Random;
+
+import javax.swing.ImageIcon;
+
 import com.twinklez.SecretForest;
 import net.minecraft.*;
 import net.minecraft.block.*;
 import net.minecraft.block.material.*;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 public class SrGrass extends Block
 {
+	private Icon sides, bottom, top;
+	
     protected SrGrass(int var1, int var2)
     {
         super(var1, Material.ground);
@@ -46,6 +52,29 @@ public class SrGrass extends Block
         }
     }
 
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+    	this.sides = par1IconRegister.func_94245_a("secretGrassSide");
+    	this.bottom = par1IconRegister.func_94245_a("srDirt");
+    	this.top = par1IconRegister.func_94245_a("secretGrass");
+    }
+    
+    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
+    {
+    	if (i == 0)
+    	{
+    		return bottom;
+    	}
+    	if (i == 1)
+    	{
+    		return top;
+    	}
+    	else
+    	{
+    		return sides;
+    	}
+    }
+    
     /**
      * A randomly called display update to be able to add particles or other items for display
      */
