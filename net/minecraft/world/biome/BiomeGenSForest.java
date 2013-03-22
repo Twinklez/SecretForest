@@ -40,7 +40,6 @@ public class BiomeGenSForest extends BiomeGenBase
         this.topBlock = (byte)SecretForest.srGrass.blockID;
         this.fillerBlock = (byte)SecretForest.srDirt.blockID;
         this.theBiomeDecorator = new BiomeDecoratorSForest(this);
-        
     }
 
 
@@ -74,6 +73,17 @@ public class BiomeGenSForest extends BiomeGenBase
             sfGenTrees.generate(par1World, par2Random, l, b0, i1);
         }
     }
+    
+    public int getSkyColorByTemp(float par1)
+    {
+        return 204895;
+    }
+    
+    public long cloudColour(long par1)
+    {
+    	return 30144255L;
+    }
 }
+
 
 

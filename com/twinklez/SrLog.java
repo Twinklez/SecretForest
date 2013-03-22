@@ -15,7 +15,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class SrLog extends Block
 {
-	private Icon sides, bottom, top;
+	private Icon sides, secretLogMetadata;
+	
     protected SrLog(int var1)
     {
         super(var1, Material.wood);
@@ -47,14 +48,20 @@ public class SrLog extends Block
         super.harvestBlock(var1, var2, var3, var4, var5, var6);
     }
     
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
-    	this.sides = par1IconRegister.func_94245_a("secretLog");
-    	this.bottom = par1IconRegister.func_94245_a("secretLogMetadata");
-    	this.top = par1IconRegister.func_94245_a("secretLogMetadata");
+    	this.sides = par1IconRegister.registerIcon("secretLog");
+    	this.secretLogMetadata = par1IconRegister.registerIcon("secretLogMetadata");
     }
     
-    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+        int k = par2 & 12;
+        int l = par2 & 3;
+        return k == 0 && (par1 == 1 || par1 == 0) ? this.secretLogMetadata : (k == 4 && (par1 == 5 || par1 == 4) ? this.secretLogMetadata : (k == 8 && (par1 == 2 || par1 == 3) ? this.secretLogMetadata : this.sides ));
+    }
+    
+ /**   public Icon getBlockTextureFromSideAndMetadata(int i, int j)
     {
     	if (i == 0)
     	{
@@ -68,7 +75,7 @@ public class SrLog extends Block
     	{
     		return sides;
     	}
-    }
+    }*/ /** Old 1.5.0 stuff. */
     
     public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
     {

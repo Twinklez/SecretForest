@@ -250,11 +250,6 @@ public class SrLeaves extends BlockLeavesBase implements IShearable
             double d1 = (double)par3 - 0.05D;
             double d2 = (double)((float)par4 + par5Random.nextFloat());
             par1World.spawnParticle("dripWater", d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        
-            if (par5Random.nextInt(100) == 0)
-            {
-                par1World.playSound((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "ambient.cave.cave11", 0.5F, par5Random.nextFloat() * 0.4F + 0.8F, false);
-            }
 
             for (int l = 0; l < 4; ++l)
             {
@@ -292,7 +287,7 @@ public class SrLeaves extends BlockLeavesBase implements IShearable
     private void removeLeaves(World par1World, int par2, int par3, int par4)
     {
         this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
-        par1World.func_94571_i(par2, par3, par4);
+        par1World.setBlockToAir(par2, par3, par4);
     }
 
     /**

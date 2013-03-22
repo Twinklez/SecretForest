@@ -1,21 +1,33 @@
 package com.twinklez;
 
+import java.awt.Color;
+import java.beans.EventHandler;
+import java.io.File;
+import java.net.URL;
 import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPortal;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundManager;
+import net.minecraft.client.audio.SoundPoolEntry;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityEggInfo;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.passive.EntityLamb;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.src.MLProp;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenSForest;
+import net.minecraftforge.client.ModCompatibilityClient;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.DimensionManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Property;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -70,6 +82,14 @@ public class SecretForest
 	public String modName = "Secret Forest {Alpha Release} v0.1";
 	public String modCreator = "Twinklez, coolboy4531";
 	
+	//Extra Stuff
+	private static World world;
+	public static File sfMusic = new File("13");
+	public EntityPlayerMP mp;
+	public EntityPlayerSP sp;
+	public File lozLullaby = new File("secret");
+	public Minecraft mc;
+	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -96,6 +116,8 @@ public class SecretForest
 		//id = config.getBlock("", ).getInt();
 		//id = config.getBlock("", ).getInt();	
 		config.save();
+		MinecraftForge.EVENT_BUS.register(new SFSoundManager());
+
 	}
 	
 	@SidedProxy(clientSide = "com.twinklez.ClientProxySecretForest", serverSide = "com.twinklez.ClientProxySecretForest")
@@ -106,7 +128,6 @@ public class SecretForest
 	public void load(FMLInitializationEvent event)
 	{
 		proxy.registerRenderThings();
-		
 		srPortal = (SrPortal)(new SrPortal(218, 0).setStepSound(Block.soundWoodFootstep).setHardness(100000000F).setResistance(1.0F).setUnlocalizedName("srForestPortal"));
 		specialStone = (new SrSpecialStone(219, 1).setHardness(5.0F).setStepSound(Block.soundStoneFootstep).setResistance(1234.5F).setUnlocalizedName("specialStone"));
 		srDirt = (new SrDirt(220, 2).setStepSound(Block.soundGrassFootstep).setHardness(0.5F).setResistance(0.5F).setUnlocalizedName("srDirt"));
@@ -143,7 +164,27 @@ public class SecretForest
 
 	    EntityRegistry.registerModEntity(EntityRobot.class, "Robot", EntityRegistry.findGlobalUniqueEntityId(), this, 80, 3, true);
 	    EntityRegistry.addSpawn(EntityRobot.class, 15, 1, 3, EnumCreatureType.creature, BiomeGenBase.secretForest);
-	    LanguageRegistry.instance().addStringLocalization("Robot", "Robot");
+	    
+	    int gray = (220 << 220) + (220 << 220) + (220 << 220);
+	    int darkGray = (200 << 89) + (255 << 37) + (255 << 137);
+	    
+	    Color grayColor = new Color(220, 220, 220);
+	    Color darkGrayColor = new Color(139, 137, 137);	    
+	       
+	    EntityList.IDtoClassMapping.put(EntityRegistry.findGlobalUniqueEntityId(), EntityRobot.class);
+	    EntityList.entityEggs.put(EntityRegistry.findGlobalUniqueEntityId(), new EntityEggInfo(EntityRegistry.findGlobalUniqueEntityId(), (new Color(220, 220, 220)).getRGB(), (new Color(139, 137, 137)).getRGB()));
+	    LanguageRegistry.instance().addStringLocalization("entity.SecretForest.Robot.name", "Robot");
+	    
+	    //mc.installResource("resources/mod/music/secret.ogg", new File(mc.mcDataDir, "resources/mod/music/secret.ogg"));
+	}
+
+	private EntityPlayerSP changePlayerEntity(int type, Minecraft minecraft)
+	{
+		if (type == dimension) 
+		{
+			return new EntityPlayerSForest(minecraft, minecraft.theWorld, minecraft.session, type);
+		}
+		return new EntityPlayerSP(minecraft, minecraft.theWorld, minecraft.session, type);
 	}
 	
 	public void addRenderer(Map map)
@@ -167,4 +208,51 @@ public class SecretForest
 			}
 		}
 	}
+	
+	public boolean onTickInGame(Minecraft minecraft, EntityPlayerSP sp)
+	{
+		EntityPlayerSP thePlayer = (EntityPlayerSP) sp;
+		if (thePlayer != null) 
+		{
+			if (world.provider.dimensionId == dimension && thePlayer instanceof EntityPlayerSForest)
+				return true;
+
+			if (world.provider.dimensionId!= dimension && !(thePlayer instanceof EntityPlayerSForest))
+				return true;
+		}
+		return true;
+	}
+	
+	public void chooseBackGroundMusic()
+	{
+		if (world.provider.dimensionId == dimension)
+		{
+			ModCompatibilityClient.audioModSoundPoolCave.addSound("resources/streaming", sfMusic);
+		}
+	}
+	
+ /**   public SoundPoolEntry onPlayBackgroundMusic(SoundManager soundmanager, SoundPoolEntry soundpoolentry)
+    {
+        if (mp.dimension == dimension)
+        {
+            return soundmanager.getMusicPool().func_1118_a("aether");
+        } 
+        else
+        {
+            return soundpoolentry;
+        }
+    }
+}*/
+	
+		public SoundPoolEntry onPlayBackgroundMusic(SoundManager sm, SoundPoolEntry spe)
+		{
+			if (mp.dimension == dimension)
+			{
+				return sm.soundPoolMusic.addSound("loz", lozLullaby);
+			}
+			else
+			{
+				return spe;
+			}
+		}
 }

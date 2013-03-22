@@ -1,9 +1,5 @@
 package net.minecraft.server.management;
 
-import cpw.mods.fml.common.network.FMLNetworkHandler;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.io.File;
 import java.net.SocketAddress;
 import java.text.SimpleDateFormat;
@@ -13,10 +9,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
-
-import com.twinklez.TeleporterSecretForest;
+import java.util.Set;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -57,7 +51,12 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.demo.DemoWorldManager;
 import net.minecraft.world.storage.IPlayerFileData;
 
-import net.minecraftforge.common.DimensionManager;
+import com.twinklez.TeleporterSecretForest;
+
+import cpw.mods.fml.common.network.FMLNetworkHandler;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public abstract class ServerConfigurationManager
 {
@@ -118,7 +117,7 @@ public abstract class ServerConfigurationManager
             s = par1INetworkManager.getSocketAddress().toString();
         }
 
-        this.mcServer.func_98033_al().func_98233_a(par2EntityPlayerMP.username + "[" + s + "] logged in with entity id " + par2EntityPlayerMP.entityId + " at (" + par2EntityPlayerMP.posX + ", " + par2EntityPlayerMP.posY + ", " + par2EntityPlayerMP.posZ + ")");
+        this.mcServer.getLogAgent().logInfo(par2EntityPlayerMP.username + "[" + s + "] logged in with entity id " + par2EntityPlayerMP.entityId + " at (" + par2EntityPlayerMP.posX + ", " + par2EntityPlayerMP.posY + ", " + par2EntityPlayerMP.posZ + ")");
         WorldServer worldserver = this.mcServer.worldServerForDimension(par2EntityPlayerMP.dimension);
         ChunkCoordinates chunkcoordinates = worldserver.getSpawnPoint();
         this.func_72381_a(par2EntityPlayerMP, (EntityPlayerMP)null, worldserver);
@@ -127,7 +126,7 @@ public abstract class ServerConfigurationManager
         netserverhandler.sendPacketToPlayer(new Packet6SpawnPosition(chunkcoordinates.posX, chunkcoordinates.posY, chunkcoordinates.posZ));
         netserverhandler.sendPacketToPlayer(new Packet202PlayerAbilities(par2EntityPlayerMP.capabilities));
         netserverhandler.sendPacketToPlayer(new Packet16BlockItemSwitch(par2EntityPlayerMP.inventory.currentItem));
-        this.func_96456_a((ServerScoreboard)worldserver.func_96441_U(), par2EntityPlayerMP);
+        this.func_96456_a((ServerScoreboard)worldserver.getScoreboard(), par2EntityPlayerMP);
         this.updateTimeAndWeatherForPlayer(par2EntityPlayerMP, worldserver);
         this.sendPacketToAllPlayers(new Packet3Chat(EnumChatFormatting.YELLOW + par2EntityPlayerMP.func_96090_ax() + EnumChatFormatting.YELLOW + " joined the game."));
         this.playerLoggedIn(par2EntityPlayerMP);
@@ -473,7 +472,7 @@ public abstract class ServerConfigurationManager
         transferPlayerToDimension(par1EntityPlayerMP, par2, mcServer.worldServerForDimension(par2).getDefaultTeleporter());
     }
     
-    public void transferPlayerToCustomDimension(EntityPlayerMP par1EntityPlayerMP, int par2)
+    public void transferPlayerToSFDimension(EntityPlayerMP par1EntityPlayerMP, int par2)
     {
         transferPlayerToDimension(par1EntityPlayerMP, par2, mcServer.worldServerForDimension(par2).getDefaultTeleporter());
     }
@@ -504,7 +503,7 @@ public abstract class ServerConfigurationManager
         GameRegistry.onPlayerChangedDimension(par1EntityPlayerMP);
     }
     
-    public void transferPlayerToCustomDimension(EntityPlayerMP par1EntityPlayerMP, int par2, TeleporterSecretForest teleportersf)
+    public void transferPlayerToSFDimension(EntityPlayerMP par1EntityPlayerMP, int par2, TeleporterSecretForest teleportersforest)
     {
         int j = par1EntityPlayerMP.dimension;
         WorldServer worldserver = this.mcServer.worldServerForDimension(par1EntityPlayerMP.dimension);
@@ -513,7 +512,7 @@ public abstract class ServerConfigurationManager
         par1EntityPlayerMP.playerNetServerHandler.sendPacketToPlayer(new Packet9Respawn(par1EntityPlayerMP.dimension, (byte)par1EntityPlayerMP.worldObj.difficultySetting, worldserver1.getWorldInfo().getTerrainType(), worldserver1.getHeight(), par1EntityPlayerMP.theItemInWorldManager.getGameType()));
         worldserver.removePlayerEntityDangerously(par1EntityPlayerMP);
         par1EntityPlayerMP.isDead = false;
-        this.transferCustomEntityToWorld(par1EntityPlayerMP, j, worldserver, worldserver1, teleportersf);
+        this.transferSFEntityToWorld(par1EntityPlayerMP, j, worldserver, worldserver1, teleportersforest);
         this.func_72375_a(par1EntityPlayerMP, worldserver);
         par1EntityPlayerMP.playerNetServerHandler.setPlayerLocation(par1EntityPlayerMP.posX, par1EntityPlayerMP.posY, par1EntityPlayerMP.posZ, par1EntityPlayerMP.rotationYaw, par1EntityPlayerMP.rotationPitch);
         par1EntityPlayerMP.theItemInWorldManager.setWorld(worldserver1);
@@ -538,7 +537,7 @@ public abstract class ServerConfigurationManager
         transferEntityToWorld(par1Entity, par2, par3WorldServer, par4WorldServer, par4WorldServer.getDefaultTeleporter());
     }
     
-    public void transferCustomEntityToWorld(Entity par1Entity, int par2, WorldServer par3WorldServer, WorldServer par4WorldServer)
+    public void transferSFEntityToWorld(Entity par1Entity, int par2, WorldServer par3WorldServer, WorldServer par4WorldServer)
     {
         transferEntityToWorld(par1Entity, par2, par3WorldServer, par4WorldServer, par4WorldServer.getDefaultTeleporter());
     }
@@ -602,7 +601,7 @@ public abstract class ServerConfigurationManager
         par1Entity.setWorld(par4WorldServer);
     }
     
-    public void transferCustomEntityToWorld(Entity par1Entity, int par2, WorldServer par3WorldServer, WorldServer par4WorldServer, TeleporterSecretForest teleportersf)
+    public void transferSFEntityToWorld(Entity par1Entity, int par2, WorldServer par3WorldServer, WorldServer par4WorldServer, TeleporterSecretForest teleportersforest)
     {
         WorldProvider pOld = par3WorldServer.provider;
         WorldProvider pNew = par4WorldServer.provider;
@@ -652,7 +651,7 @@ public abstract class ServerConfigurationManager
                 par4WorldServer.spawnEntityInWorld(par1Entity);
                 par1Entity.setLocationAndAngles(d0, par1Entity.posY, d1, par1Entity.rotationYaw, par1Entity.rotationPitch);
                 par4WorldServer.updateEntityWithOptionalForce(par1Entity, false);
-                teleportersf.placeInPortal(par1Entity, d3, d4, d5, f);
+                teleportersforest.placeInPortal(par1Entity, d3, d4, d5, f);
             }
 
             par3WorldServer.theProfiler.endSection();

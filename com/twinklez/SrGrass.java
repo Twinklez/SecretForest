@@ -14,8 +14,7 @@ import net.minecraft.world.World;
 
 public class SrGrass extends Block
 {
-	private Icon sides, bottom, top;
-	
+	public Icon secretGrassMetadata, secretGrass, secretDirt;
     protected SrGrass(int var1, int var2)
     {
         super(var1, Material.ground);
@@ -32,7 +31,7 @@ public class SrGrass extends Block
         {
             if (par1World.getBlockLightValue(par2, par3 + 1, par4) < 4 && par1World.getBlockLightOpacity(par2, par3 + 1, par4) > 2)
             {
-                par1World.func_94575_c(par2, par3, par4, SecretForest.srDirt.blockID);
+                par1World.setBlock(par2, par3, par4, SecretForest.srDirt.blockID);
             }
             else if (par1World.getBlockLightValue(par2, par3 + 1, par4) >= 9)
             {
@@ -45,21 +44,26 @@ public class SrGrass extends Block
 
                     if (par1World.getBlockId(i1, j1, k1) == SecretForest.srDirt.blockID && par1World.getBlockLightValue(i1, j1 + 1, k1) >= 4 && par1World.getBlockLightOpacity(i1, j1 + 1, k1) <= 2)
                     {
-                        par1World.func_94575_c(i1, j1, k1, SecretForest.srGrass.blockID);
+                        par1World.setBlock(i1, j1, k1, SecretForest.srGrass.blockID);
                     }
                 }
             }
         }
     }
 
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
-    	this.sides = par1IconRegister.func_94245_a("secretGrassSide");
-    	this.bottom = par1IconRegister.func_94245_a("srDirt");
-    	this.top = par1IconRegister.func_94245_a("secretGrass");
+    	this.secretDirt = par1IconRegister.registerIcon("srDirt");
+    	this.secretGrass = par1IconRegister.registerIcon("secretGrass");
+    	this.secretGrassMetadata = par1IconRegister.registerIcon("secretGrassSide");
     }
     
-    public Icon getBlockTextureFromSideAndMetadata(int i, int j)
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+    	return par1 == 1 ? this.secretGrass : (par1 == 0 ? this.secretDirt : this.secretGrassMetadata);
+    }
+    
+   /** public Icon getBlockTextureFromSideAndMetadata(int i, int j)
     {
     	if (i == 0)
     	{
@@ -73,7 +77,7 @@ public class SrGrass extends Block
     	{
     		return sides;
     	}
-    }
+    } */ /** Old 1.5.0 stuff. */
     
     /**
      * A randomly called display update to be able to add particles or other items for display

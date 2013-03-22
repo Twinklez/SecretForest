@@ -1,6 +1,8 @@
 package com.twinklez;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.audio.SoundManager;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -13,6 +15,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import paulscode.sound.SoundSystemConfig;
+import paulscode.sound.codecs.CodecIBXM;
 
 public class EntityRobot extends EntityMob
 {
@@ -40,6 +44,20 @@ public class EntityRobot extends EntityMob
     public int getMaxHealth()
     {
         return 112;
+    }
+    
+    public World world;
+    public SoundManager soundManager;
+    public Entity entity;
+    
+    public void playSound()
+    {
+    	world.playSound(1D, 1D, 1D, "secret", 1F, 0F, true);
+    	world.playSoundAtEntity(entity, "secret", 1F, 0F);
+    	soundManager.playSoundFX("secret", 1F, 0F);
+    	SoundSystemConfig.setCodec("xm", CodecIBXM.class);
+    	SoundSystemConfig.setCodec("s3m", CodecIBXM.class);
+    	SoundSystemConfig.setCodec("mod", CodecIBXM.class);
     }
     
     public boolean onWeakened()
@@ -80,9 +98,9 @@ public class EntityRobot extends EntityMob
      *  Returns the sound when it is living
      */
     
-    protected String getLivingSound()
+    protected String getLivingSound() 
     {
-    	return "mob.blaze.breathe";
+    	return "secret.idle.secret";
     }
     
     /**

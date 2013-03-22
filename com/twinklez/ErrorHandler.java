@@ -97,7 +97,7 @@ public class ErrorHandler
 		{
 			sf.modName.replaceAll("Dimension", sf.modName);
 		}
-		if (sf.modCreator.toString().startsWith("ABDEFGHIJKLMNOPQRSUVWXYZ"))
+		if (sf.modCreator.toString().startsWith("AB-DEFGHIJKLMNOPQRS_UVWXYZ"))
 		{
 			sf.modCreator.toString().equals("sf.modCreator[].getStrings(" + "Twinklez, " + "coolboy4531" + ")");
 		}

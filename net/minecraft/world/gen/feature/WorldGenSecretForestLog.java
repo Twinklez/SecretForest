@@ -19,24 +19,24 @@ public class WorldGenSecretForestLog extends WorldGenerator
 
             if (par1World.isAirBlock(i1, j1, k1) && par1World.getBlockId(i1, j1 - 1, k1) == SecretForest.srGrass.blockID && SecretForest.srLog.canPlaceBlockAt(par1World, i1, j1, k1))
             {
-                par1World.setBlockAndMetadataWithNotify(i1, j1, k1, SecretForest.srLog.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 1, k1, SecretForest.srLog.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 2, k1, SecretForest.srLog.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 3, k1, SecretForest.srLog.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 4, k1, SecretForest.srLog.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 5, k1, SecretForest.srLog.blockID, 0, 2);
+                par1World.setBlock(i1, j1, k1, SecretForest.srLog.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 1, k1, SecretForest.srLog.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 2, k1, SecretForest.srLog.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 3, k1, SecretForest.srLog.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 4, k1, SecretForest.srLog.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 5, k1, SecretForest.srLog.blockID, 0, 2);
                 
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 6, k1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1 + 1, j1 + 6, k1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1 - 1, j1 + 6, k1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 6, k1 + 1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 6, k1 - 1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1 + 1, j1 + 6, k1 + 1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1 + 1, j1 + 6, k1 - 1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1 - 1, j1 + 6, k1 + 1, SecretForest.srLeaves.blockID, 0, 2);
-                par1World.setBlockAndMetadataWithNotify(i1 - 1, j1 + 6, k1 - 1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 6, k1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1 + 1, j1 + 6, k1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1 - 1, j1 + 6, k1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 6, k1 + 1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 6, k1 - 1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1 + 1, j1 + 6, k1 + 1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1 + 1, j1 + 6, k1 - 1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1 - 1, j1 + 6, k1 + 1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1 - 1, j1 + 6, k1 - 1, SecretForest.srLeaves.blockID, 0, 2);
                 
-                par1World.setBlockAndMetadataWithNotify(i1, j1 + 7, k1, SecretForest.srLeaves.blockID, 0, 2);
+                par1World.setBlock(i1, j1 + 7, k1, SecretForest.srLeaves.blockID, 0, 2);
             }
             
 

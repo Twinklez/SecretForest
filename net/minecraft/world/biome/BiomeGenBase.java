@@ -47,7 +47,7 @@ public abstract class BiomeGenBase
     public static final BiomeGenBase swampland = (new BiomeGenSwamp(6)).setColor(522674).setBiomeName("Swampland").func_76733_a(9154376).setMinMaxHeight(-0.2F, 0.1F).setTemperatureRainfall(0.8F, 0.9F);
     public static final BiomeGenBase river = (new BiomeGenRiver(7)).setColor(255).setBiomeName("River").setMinMaxHeight(-0.5F, 0.0F);
     public static final BiomeGenBase hell = (new BiomeGenHell(8)).setColor(16711680).setBiomeName("Hell").setDisableRain().setTemperatureRainfall(2.0F, 0.0F);
-    public static final BiomeGenBase secretForest = (new BiomeGenSForest(23)).setColor(808080).setBiomeName("Secret Forest").setTemperatureRainfall(0.001F, 0.4F);
+    public static final BiomeGenBase secretForest = (new BiomeGenSForest(23)).setColor(808080).setBiomeName("Secret Forest").setTemperatureRainfall(0.001F, 0.4F).setMinMaxHeight(0.003F, 0.45F);
     
     /** Is the biome used for sky world. */
     public static final BiomeGenBase sky = (new BiomeGenEnd(9)).setColor(8421631).setBiomeName("Sky").setDisableRain();

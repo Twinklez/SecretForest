@@ -47,12 +47,12 @@ public class SrPortal extends BlockPortal
 				EntityPlayerMP thePlayer = (EntityPlayerMP)par5Entity;
 				if (par5Entity.dimension != SecretForest.dimension)
 				{
-					thePlayer.mcServer.getConfigurationManager().transferPlayerToCustomDimension(thePlayer, SecretForest.dimension, 
+					thePlayer.mcServer.getConfigurationManager().transferPlayerToSFDimension(thePlayer, SecretForest.dimension, 
 					new TeleporterSecretForest(thePlayer.mcServer.worldServerForDimension(SecretForest.dimension)));
 				}
 				else
 				{
-					thePlayer.mcServer.getConfigurationManager().transferPlayerToCustomDimension(thePlayer, SecretForest.dimension, 
+					thePlayer.mcServer.getConfigurationManager().transferPlayerToSFDimension(thePlayer, SecretForest.dimension, 
 					new TeleporterSecretForest(thePlayer.mcServer.worldServerForDimension(SecretForest.dimension)));
 					thePlayer.sendChatToPlayer("\u00a78[SecretForest] You can not exit the SecretForest because of the force-field of this dimension!");
 				}
@@ -120,7 +120,7 @@ public class SrPortal extends BlockPortal
             {
                 for (i1 = 0; i1 < 3; ++i1)
                 {
-                    par1World.setBlockAndMetadataWithNotify(par2 + b0 * l, par3 + i1, par4 + b1 * l, SecretForest.srPortal.blockID, 0, 2);
+                    par1World.setBlock(par2 + b0 * l, par3 + i1, par4 + b1 * l, SecretForest.srPortal.blockID, 0, 2);
                 }
             }
 
@@ -132,7 +132,7 @@ public class SrPortal extends BlockPortal
     {
         if (par5Random.nextInt(100) == 0)
         {
-            par1World.playSound((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "ambient.cave.cave11", 0.5F, par5Random.nextFloat() * 0.4F + 0.8F, false);
+        	par1World.playSound((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "secret.idle.secret", 0.5F, par5Random.nextFloat() * 0.4F + 0.8F, false);
         }
 
         for (int l = 0; l < 4; ++l)
@@ -183,7 +183,7 @@ public class SrPortal extends BlockPortal
 
         if (par1World.getBlockId(par2, i1 - 1, par4) != SecretForest.specialStone.blockID)
         {
-            par1World.func_94571_i(par2, par3, par4);
+            par1World.setBlockToAir(par2, par3, par4);
         }
         else
         {
@@ -201,23 +201,28 @@ public class SrPortal extends BlockPortal
 
                 if (flag && flag1)
                 {
-                    par1World.func_94571_i(par2, par3, par4);
+                    par1World.setBlockToAir(par2, par3, par4);
                 }
                 else
                 {
                     if ((par1World.getBlockId(par2 + b0, par3, par4 + b1) != SecretForest.specialStone.blockID || par1World.getBlockId(par2 - b0, par3, par4 - b1) != this.blockID) && (par1World.getBlockId(par2 - b0, par3, par4 - b1) != SecretForest.specialStone.blockID || par1World.getBlockId(par2 + b0, par3, par4 + b1) != this.blockID))
                     {
-                        par1World.func_94571_i(par2, par3, par4);
+                        par1World.setBlockToAir(par2, par3, par4);
                     }
                 }
             }
             else
             {
-                par1World.func_94571_i(par2, par3, par4);
-            }
+                par1World.setBlockToAir(par2, par3, par4);
+            } 
         }
     }
 }
+
+/**
+ * func_94571_i 
+ * \/setBlockToAir in MC 1.5.1\/
+ */
 
 
 
